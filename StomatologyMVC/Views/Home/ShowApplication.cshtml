@@ -1,0 +1,78 @@
+﻿@using StomatologyMVC.Extensions
+@using StomatologyMVC.Models
+@using System.Linq
+
+@model StomatologyMVC.Models.ShowApplicationModel
+@{
+    ViewBag.Title = "Заявки";
+}
+
+<h2>Ваши заявки.</h2>
+@Html.ValidationSummary("", new { @class = "text-danger" })
+@using (Html.BeginForm("ShowApplication", "Home", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()    
+    <div >
+    <table class="table table-condensed" style="width:630px">
+        <tr>
+            <th valign="middle" >@Html.LabelFor(m => m.ID)</th>
+            <th valign="middle"><label for="DateTime">Дата и время</label></th>
+            <th valign="middle">@Html.LabelFor(m => m.State, new { })</th>
+        </tr>
+        @{
+            EntryRepository rep = new EntryRepository();
+            IEnumerable<Entry> entry = rep.GetItemsList().Where(a => a.UserId == User.Identity.GetUser().Id);
+
+            foreach (var e in entry)
+            {
+                <tr>
+                    <td>
+                        <div class="btn btn-default">
+                            @e.Id
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn btn-default">
+                            @e.DateTime.ToString("dd.MM.yyyy HH:mm")
+                        </div>
+                    </td>
+                    @if (e.State == EnumsState.Wait)
+                    {
+                        <td>
+                            <div return class="btn btn-warning" style="margin-bottom:5px; width:100px">
+                                В ожидании
+                            </div>
+                        </td>
+                    }
+                    else if (e.State == EnumsState.Accepted)
+                    {
+                        <td>
+                            <div return class="btn btn-success" style="margin-bottom:5px; width:100px">
+                                Принято
+                            </div>
+                        </td>
+                    }
+                    else if (e.State == EnumsState.Denied)
+                    {
+                        <td>
+                            <div return class="btn btn-danger" style="margin-bottom:5px; width:100px">
+                                Отказано
+                            </div>
+                        </td>
+                        <td>
+                            <div return class="btn btn-info" style="margin-bottom:5px">
+                                Причина: @e.Couse
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+            rep.Dispose();
+            }
+</table>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

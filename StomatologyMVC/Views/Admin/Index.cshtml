@@ -1,0 +1,151 @@
+﻿@using StomatologyMVC.Models
+@model AdminViewModel
+@{
+    ViewBag.Title = "Администратор";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+
+@Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th valign="middle">Номер</th>
+                <th valign="middle">Фамилия Имя Отчество</th>
+                <th valign="middle">Email</th>
+                <th valign="middle">Номер телефона</th>
+                <th valign="middle">Дата и время</th>
+                <th valign="middle">Номер кабинета</th>
+                <th valign="middle">Жалоба</th>
+                <th valign="middle">Состояние</th>
+                <th valign="middle">Причина</th>
+            </tr>
+        </thead>
+        @{
+            EntryRepository rep = new EntryRepository();
+            ApplicationUserRepository us = new ApplicationUserRepository();
+            var Application = rep.GetItemsList();
+            var User = us.GetItemsList();
+
+            foreach (var app in Application)
+            {
+                foreach (var user in User)
+                {
+                    if (app.UserId == user.Id)
+                    {
+                        <tr>
+                            @using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                            
+                            <th ><div class="alert alert-info" name="Id" type="number" value="" style="width:auto; height:auto;">
+                                    @app.Id
+                                 </div>
+                            </th>
+                            <th>@user.FullName</th>
+                            <th>@user.Email</th>
+                            <th>@user.PhoneNumber</th>
+                            <th>@app.DateTime.ToString("dd.MM.yyyy HH:mm")</th>
+                            <th>@app.Cabinet</th>
+                            <th>@app.Complaint</th>
+                            <th>@if (app.State == EnumsState.Wait)
+                            {
+                                <div>В ожидании</div>
+                            }
+                            else if (app.State == EnumsState.Accepted)
+                            {
+                                <div>Принято</div>
+                            }
+                            else if (app.State == EnumsState.Denied)
+                            {
+                                <div>Отклонено</div>
+                            }
+                            </th>
+                            <th>@app.Couse</th>
+                            if (@app.State == EnumsState.Wait)
+                            {
+                            <th><input type="submit"  class="btn btn-success" value="Принять"/><input type="hidden" name="Assept"  value="@app.Id" /></th>
+                            <th><input type="button" name="DeniedBtn" class="btn btn-danger" onclick="denied(@app.Id)" data-toggle="modal" data-target="#myModal" value="Отказать" /></th>
+                            <th><input type="button" name="ChangeBtn" class="btn btn-warning" onclick="change(@app.Id)" data-toggle="modal" data-target="#dateModal" value="Изменить дату" /></th>
+                            }
+                            }
+                        </tr>
+                        
+                   }
+                }
+            }
+            rep.Dispose();
+            us.Dispose();
+        }
+    </table>
+@using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Укажите причину <input type="text" class="alert alert-warning" id="modalId" style="width:50px; height:40px" readonly /></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="container" style="width:270px">
+                        <textarea class="form-control" required data-val="true" id="Comlaint" style="max-width: 100%; margin: 0px; width: 270px; height: 134px;" name="Comlaint"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" name="DeniedSbm" class="btn btn-danger" value="Отказать" />
+                <input type="hidden" name="Denied" id="DeniedId" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+}
+
+@using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { role = "form" }))
+{
+    <style>
+        .datepicker {
+            z-index: 1151 !important;
+        }
+    </style>
+    @Html.AntiForgeryToken()
+    <!-- Modal -->
+    <div class="modal fade" id="dateModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="width:313px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Укажите дату <input type="text" class="alert alert-warning" id="dateModalId" style="width:50px; height:40px" readonly /></h4>
+                </div>
+                <div class="modal-body form-group">
+                    <div class="btn-group btn-group-justified">
+                        <input type='text' onblur="if (this.value == '') {this.value = 'Выберете дату...';}" value="Нажмите на поле..." class='form-control datepicker-here btn btn-default' style="width:200px;margin-left:15px" name="Date" id="Date" readonly />
+                        <button style="width:40px" onclick="ChangeSbm.style = 'visibility:visible'" class="btn btn-primary" id="submitDate"><div class="glyphicon glyphicon-ok" style="margin:auto"></div></button>
+                    </div>
+                    <div id="results" style="margin-top:20px; width:240px; margin-left:15px"> </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" name="ChangeSbm" class="btn btn-warning" value="Изменить" style="visibility:hidden" />
+                    <input type="hidden" name="Change" id="ChangeId" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/Scripts/piker.js")
+    @Styles.Render("~/bundles/piker.css")
+    @Scripts.Render("~/Scripts/JavaScript.js")
+}

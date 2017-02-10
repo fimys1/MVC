@@ -1,0 +1,117 @@
+﻿@using StomatologyMVC.Extensions
+@model StomatologyMVC.Models.ApplicationViewModels
+
+@{
+    ViewBag.Title = "Создать заявку";
+}
+
+<h2>@ViewBag.Title.</h2>
+    <div class="form-horizontal"  >
+        @Html.AntiForgeryToken()
+        <h4>Создайте запись.</h4>
+        <hr />
+                
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <input class="form-control valid" data-val="true" data-val-required="Требуется поле Фамилия Имя Отчество." id="UserName" name="UserName" type="text" value="@User.Identity.GetUser().FullName" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <input class="form-control valid" data-val="true" data-val-required="Требуется поле Телефон." id="Phone" name="Phone" type="text" value="@User.Identity.GetUser().PhoneNumber" readonly />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <input class="form-control valid" data-val="true" data-val-required="Требуется поле Email." id="Email" name="Email" type="text" value="@User.Identity.GetUser().Email" readonly />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Comlaint, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <textarea ng-model="complaint" class="form-control valid" data-val="true" data-val-required="Требуется поле Жалоба." id="Comlaint" name="Comlaint" type="text"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Date, new { @class = "col-md-2 control-label", @id = "DateLabel" })
+            <div class="col-md-10">
+                <div class="btn-group btn-group-justified">
+                    <input type='text' onblur="if (this.value == '') {this.value = 'Нажмите на поле...';}" value="Нажмите на поле..." class='form-control datepicker-here btn btn-default' style="width:170px" name="Date" id="Date" readonly />
+                    <button type='button' ng-click="Wait()" class="btn btn-success" id="submitDate" style="width:40px" value="Выбрать дату"><div class="glyphicon glyphicon-ok" style="margin:auto"></div></button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="form-group" id="output">
+                @Html.LabelFor(m => m.Time, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <select ng-model="time" class="form-control" data-val="true" data-val-required="Требуется поле Время." id="Time" name="Time" type="text">
+                        <option disabled value="0">Выбирите дату</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="results"></div>
+                <div class="form-group" id="form-groupid">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div ng-click="Send(time, complaint)" style="visibility:hidden" id="Submit" class="btn btn-success">Отправить</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            @section Scripts {
+                @Scripts.Render("~/Scripts/piker.js")
+                @Styles.Render("~/bundles/piker.css")
+                @Scripts.Render("~/bundles/jqueryval")
+                @Scripts.Render("~/Scripts/myAjax")
+                @Scripts.Render("~/Scripts/angular.js")
+
+                <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+
+                <script>
+
+                    var uri = 'api/Application';
+
+                    var model = {
+                        Email: "@User.Identity.GetUser().Email",
+                        Phone: "@User.Identity.GetUser().PhoneNumber",
+                        Time: "",
+                        UserName: "@User.Identity.GetUser().FullName",
+                        Comlaint: ""
+                    };
+
+                    var application = angular.module('application', []);
+
+                    application.controller("appContrl", function ($scope) {
+
+                        $scope.Wait = function () {
+                           // $('#results').text('Подождите...');
+                        }
+
+                        $scope.Send = function (time, comlaint) {
+                            if (time != "" && comlaint != "") {
+                                var d = new Date();
+                                d.setTime(Date.parse(time));
+                                $.getJSON(uri + '/' + "Time?date=" + d + "Comlaint?comlaint=" + comlaint).done(function (data) {
+                                    $('#results').text(formatItem(data));
+                                }).fail(function (jqXHR, textStatus, err) {
+                                    $('#results').text('Error: ' + err);
+                                });
+                            }
+                        }
+                    });
+
+
+                </script>
+            }
+
