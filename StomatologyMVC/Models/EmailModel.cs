@@ -21,7 +21,7 @@ namespace StomatologyMVC.Models
             client.UseDefaultCredentials = true;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
-            NetworkCredential basicAuthenticationInfo = new NetworkCredential("", "");
+            NetworkCredential basicAuthenticationInfo = new NetworkCredential("login", "password");
             client.Credentials = basicAuthenticationInfo;
             client.Send(mail);
         }
