@@ -1,0 +1,35 @@
+﻿<h2>Ваши заявки.</h2>
+<div ng-controller="allContrl">
+    <div ng-model="result" style="color:red">{{result}}</div>
+    <table class="table table-condensed" style="width:530px">
+        <tr>
+            <th>ID заявки</th>
+            <th>Дата и время</th>
+            <th>Статус</th>
+        </tr>
+        <tr ng-repeat="app in appAll">
+            <td>
+                <a data-id='{{app.Id}}' ng-click="show($event)" class="btn btn-default">
+                    {{app.Id}}
+                </a>
+            </td>
+            <td>
+                <div class="btn btn-default">
+                    {{app.DateTime}}
+                </div>
+            </td>
+            <td>
+                <div class="btn btn-warning" style="margin-bottom:5px; width:100px">
+                    {{app.State}}
+                </div>
+            </td>
+
+            <td>
+                <div style="margin-bottom:5px">
+                    {{app.Couse}}
+                </div>
+            </td>
+        </tr>
+    </table>
+    <pop-up-dialog></pop-up-dialog>
+</div>

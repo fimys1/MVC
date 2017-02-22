@@ -12,7 +12,7 @@ namespace StomatologyMVC.Extensions
     {
         static ApplicationDbContext db = ApplicationDbContext.Create();
         public static ApplicationUser GetUser(this IIdentity identity)
-        {
+        {            
             return db.Users.Find(identity.GetUserId());
         }
     }

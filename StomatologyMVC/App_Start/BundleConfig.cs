@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using StomatologyMVC.App_Start;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Optimization;
 
 namespace StomatologyMVC
@@ -23,24 +25,42 @@ namespace StomatologyMVC
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/piker.js").Include(
-                        "~/Scripts/datepicker.min.js"));
+            bundles.Add(new StyleBundle("~/bundles/320").Include(
+                      "~/Content/320andup.css"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/myAjax").Include(
+            bundles.Add(new ScriptBundle("~/bundles/myAjax.js").Include(
                         "~/Scripts/myAjax.js"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/JavaScript.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/JavaScript.js").Include(
                         "~/Scripts/JavaScript.js"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/angular.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/angular.js").Include(
                         "~/Scripts/angular.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/piker.css").Include(
+            bundles.Add(new ScriptBundle("~/bundles/angular-route.js").Include(
+                        "~/Scripts/angular-route.min.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/piker.css").Include(
                         "~/Content/datepicker.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/piker.js").Include(
+                        "~/Scripts/datepicker.min.js"));
+
+            bundles.Add(new Bundle("~/bundles/partials").Include("~/Partials/HtmlAppPage1.html"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/Scripts/module.js",
+                        "~/Scripts/config.js",
+                        "~/Scripts/property.js",                        
+                        "~/Scripts/appControl.js",
+                        "~/Scripts/allControl.js",
+                        
+                        "~/Scripts/DirectiveShow.js"));
         }
     }
 }

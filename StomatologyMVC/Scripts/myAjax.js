@@ -3,11 +3,6 @@
         e.preventDefault();
         var name = $('#Date').val();
         name = encodeURIComponent(name);
-        $('#Time').load("/Home/Time?date=" + name)
-            .ajaxSuccess(Chang());
+        $('#IdTime').load("/Home/Time?date=" + name); 
     });
 });
-
-Chang = function () {
-    document.getElementById("Submit").style.visibility = 'visible';
-}

@@ -2,18 +2,18 @@
 @using Microsoft.AspNet.Identity.EntityFramework
 @using StomatologyMVC.Models
 <!DOCTYPE html>
-<html ng-app="application">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
 
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 
-<body ng-controller="appContrl">
+<body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -35,7 +35,8 @@
                         else
                         {
                             <li>@Html.ActionLink("Создать заявку", "Application", "Home")</li>
-                            <li>@Html.ActionLink("Мои заявки", "ShowApplication", "Home")</li>
+                            <li><a href="/Home/Application#/allApp">Мои заявки</a></li>
+                            <!--<li>@Html.ActionLink("Мои заявки", "ShowApplication", "Home")</li>-->
                         }
                     }
                     <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>

@@ -18,40 +18,10 @@ namespace StomatologyMVC.Controllers
             return View();
         }
 
-        public IEnumerable<DateTime> GetFreeDateTime(DateTime daty)
+        public ActionResult Time(string date)
         {
-            if (daty.Date != null)
-            {
-                EntryRepository rep = new EntryRepository();
-                DateTime day = new DateTime(daty.Year, daty.Month, daty.Day).Date;
-                DateTime startTime = day.AddHours(8);
-                DateTime endTime = day.AddHours(17);
-                int interval = 30;
-                List<DateTime> dateTime = new List<DateTime>();
-                for (DateTime t = startTime; t < endTime; t = t.AddMinutes(interval))
-                {
-                    dateTime.Add(t);
-                }
-                IEnumerable<DateTime> busyTime = rep.GetItemsList().Where(a => a.State != EnumsState.Denied && a.DateTime.Date == day).Select(a => a.DateTime);
-                List<DateTime> freeTime = new List<DateTime>();
-                foreach (var d in dateTime)
-                {
-                    if (!busyTime.Contains(d))
-                    {
-                        freeTime.Add(d);
-                    }
-                }
-                rep.Dispose();
-                return freeTime;
-            }
-            else
-                return null;
-        }
-
-        [Authorize]
-        public ActionResult Time(string date, string role)
-        {
-            if (Request.IsAjaxRequest() && Request.IsAuthenticated && date!=null)
+            bool ajax = Request.IsAjaxRequest();
+            if (Request.IsAuthenticated && date!=null && date!= "undefined")
             {
                 DateTime dateTime;
                 if (DateTime.TryParse(date,out dateTime))
@@ -63,20 +33,14 @@ namespace StomatologyMVC.Controllers
                         {
                             ViewBag.Role = "Admin";
                         }
-                        ViewBag.Times = GetFreeDateTime(dateTime);
+                        ViewBag.Times = TimeModel.GetFreeDateTime(dateTime);
                         
                         return PartialView("Time");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Вы ввели не соответствующую дату.");
-                        ViewBag.Times = null;
-                        return PartialView();
                     }
                 }
             }
             return null; 
-        }
+        }        
 
         [HttpGet]
         [Authorize(Roles = "User")]
@@ -84,7 +48,7 @@ namespace StomatologyMVC.Controllers
         {
             return View();
         }
-        
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

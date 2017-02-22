@@ -9,36 +9,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using StomatologyMVC.Extensions;
+using System.Runtime.Serialization;
 
 namespace StomatologyMVC.Models
 {
+    [DataContract]
     public class ApplicationViewModels
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Адрес электронной почты")]
-        public string Email { get; set; }
-
-        [Required]
-        [Phone]
-        [StringLength(10, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 9)]
-        [Display(Name = "Телефон")]
-        public string Phone { get; set; }
-
-        [Required]
-        [Display(Name = "Дата")]
-        public string Date { get; set; }
-
-        [Required]
-        [Display(Name = "Время")]
+        [DataMember]
         public string Time { get; set; }
 
-        [Required]
-        [Display(Name = "Фамилия Имя Отчество")]
-        public string UserName { get; set; }
-
-        [Required]
-        [Display(Name = "Жалоба")]
-        public string Comlaint { get; set; }
+        [DataMember]
+        public string Complaint { get; set; }
     }
 }

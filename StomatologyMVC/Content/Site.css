@@ -22,3 +22,121 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#popUpDialog-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#popUpDialog {
+  position: absolute;
+  width:600px;
+  top: 70px;
+  bottom:20px;
+  padding: 15px;
+  background: white;
+}
+
+#popUpDialog .content {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#popUpDialog .buttons-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1200px) {
+    table {
+        width: 700px;
+    }
+    #close{
+        left:32%;
+    }
+    #popUpDialog {
+        left:28%;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1200px){
+    table {
+        width: 600px;
+    }
+    #close{
+        left:35.2%;
+    }
+    #popUpDialog {
+        left:20%;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1000px){
+    table {
+        width: 500px;
+    }
+    #close{
+        left:24%;
+    }
+    #popUpDialog {
+        left:18%;
+    }
+}
+
+@media screen and (max-width: 800px){
+    table {
+        width: 400px;
+    }
+    #close{
+        left:31.5%;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 800px){
+    #popUpDialog {
+        left:11%;
+    }
+}
+
+@media screen and (min-width: 725px) and (max-width: 750px){
+    #popUpDialog {
+        left:9%;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 725px){
+    #popUpDialog {
+        left:7%;
+    }
+}
+
+@media screen and (min-width: 675px) and (max-width: 700px){
+    #popUpDialog {
+        left:5%;
+    }
+}
+
+@media screen and (min-width: 650px) and (max-width: 675px){
+    #popUpDialog {
+        left:3%;
+    }
+}
+
+
+@media screen and (min-width: 625px) and (max-width: 650px){
+    #popUpDialog {
+        left:2%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #popUpDialog {
+        top: 50px;
+        bottom: 0px;
+        left:0%;
+    }
+}

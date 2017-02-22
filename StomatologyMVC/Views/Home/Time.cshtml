@@ -1,18 +1,19 @@
 ﻿@using System.Web.Mvc;
 @model StomatologyMVC.Models.ApplicationViewModels
 
-@using (Html.BeginForm("Application", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    if (ViewBag.Role != "Admin")
-    {
-        if (ViewBag.Times != null)
+@{
+        if (ViewBag.Role != "Admin")
         {
-            foreach (var b in ViewBag.Times)
+            if (ViewBag.Times != null)
             {
-            <option value="@b">@b.ToString("HH:mm")</option>
+                <option value="0">Выбирите время</option>
+                foreach (var b in ViewBag.Times)
+                {
+                    <option value="@b">@b.ToString("HH:mm")</option>
+                }
+            
             }
         }
-    }
     else if (ViewBag.Role == "Admin")
     {
         <select class="btn dropdown-toggle btn-default" data-val="true" id="Time" name="Time" type="text">
