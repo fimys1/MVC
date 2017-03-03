@@ -1,0 +1,66 @@
+﻿<h2>Создать заявку.</h2>
+<div class="form-horizontal" ng-controller="ApplicationContrl">
+    <h4>Создайте запись.</h4>
+    <hr />
+    <div ng-model="result" style="color:red">{{result}}</div>
+    <div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Фамилия Имя Отчество</label>
+            <div class="col-md-10">
+                <div class="form-control" style="width:275px; margin-top:10px" id="IdUserName" name="UserName" type="text" readonly>
+                    {{userinf.Name}}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Телефон</label>
+            <div class="col-md-10">
+                <div class="form-control" data-val="true" style="width:275px;" id="IdPhone" name="Phone" type="text" readonly>
+                    {{userinf.Phone}}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Адрес электронной почты</label>
+            <div class="col-md-10">
+                <div class="form-control" style="width:275px; margin-top:10px" id="IdEmail" name="Email" type="text" readonly>
+                    {{userinf.Email}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Жалоба</label>
+        <div class="col-md-10">
+            <textarea ng-model="complaint" style="width:275px;" class="form-control valid" data-val="true" id="IdComlaint" name="Comlaint" required type="text">{{complaint}}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Дата</label>
+        <div class="col-md-10">
+            <div class="btn-group btn-group-justified">
+                <input type="date" id="Input" name="input" ng-change="getOptions(date.value)" ng-model="date.value" style="width:275px" class="btn btn-default" min="@DateTime.Now.Date.ToString(" yyyy-MM-dd")" max="@DateTime.Now.Date.ToString(" yyyy")-12-31" required />
+                <!--<button type='button' ng-click="getOptions(date.value)" class="btn btn-success" id="submitDate" style="width:40px; height:36px"><div class="glyphicon glyphicon-ok" style="margin:auto"></div></button>-->
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="form-group" id="output">
+            <label class="col-md-2 control-label">Время</label>
+            <div class="col-md-10">
+                <select ng-options="option as option.valueScren for option in options track by option.valueHiden" ng-model="selected" ng-change="btnVisibility()" style="width:275px;" class="form-control" data-val="true" id="IdTime" name="Time"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" id="form-groupid">
+        <div class="col-md-offset-2 col-md-10">
+            <button ng-click="send()" ng-style="sendBtn" style="visibility:hidden" id="Submit" class="btn btn-success">Отправить</button>
+        </div>
+    </div>
+</div>
