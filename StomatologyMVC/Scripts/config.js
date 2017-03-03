@@ -1,12 +1,12 @@
 ﻿app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('');
     $routeProvider.when('/', {
-        templateUrl: '/Partials/app.html',
-        controller: 'appContrl'
+        templateUrl: '/Partials/application.html',
+        controller: 'ApplicationContrl'
     })
-    $routeProvider.when('/allApp', {
-        templateUrl: '/Partials/allApp.html',
-        controller: 'allContrl'
+    $routeProvider.when('/entrys', {
+        templateUrl: '/Partials/Entrys.html',
+        controller: 'EntrysContrl'
     });
     $routeProvider.otherwise({
         redirectTo:'/'

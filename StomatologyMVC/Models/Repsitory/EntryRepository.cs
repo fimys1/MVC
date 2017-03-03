@@ -88,7 +88,7 @@ namespace StomatologyMVC.Models
         public void Dispose()
         {
             appContext.Dispose();
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
         }
     }
 }

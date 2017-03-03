@@ -56,9 +56,9 @@ namespace StomatologyMVC
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/module.js",
                         "~/Scripts/config.js",
-                        "~/Scripts/property.js",                        
-                        "~/Scripts/appControl.js",
-                        "~/Scripts/allControl.js",
+                        "~/Scripts/property.js",
+                        "~/Scripts/ApplicationControl.js",
+                        "~/Scripts/EntrysControl.js",
                         
                         "~/Scripts/DirectiveShow.js"));
         }

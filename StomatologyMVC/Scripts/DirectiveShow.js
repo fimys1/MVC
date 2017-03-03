@@ -2,7 +2,7 @@
     return {
         restrict: 'E',
         scope: false,
-        templateUrl: '/Partials/show.html',
+        templateUrl: '/Partials/entry.html',
         controller: function ($scope, $http) {
 
             $scope.showpopUpDialog = false;
