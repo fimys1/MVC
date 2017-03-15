@@ -11,19 +11,26 @@ namespace StomatologyMVC.Models
     {
         public static void SendEmail(string email, string text)
         {
-            MailMessage mail = new MailMessage("gerh1995@gmail.com", email);
-            mail.Subject = "Стоматология";
-            mail.Body = text;
-            mail.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = true;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            NetworkCredential basicAuthenticationInfo = new NetworkCredential("gerh1995@gmail.com", "sgziolzlatqxqyxj");
-            client.Credentials = basicAuthenticationInfo;
-            client.Send(mail);
+            try
+            {
+                MailMessage mail = new MailMessage("gerh1995@gmail.com", email);
+                mail.Subject = "Стоматология";
+                mail.Body = text;
+                mail.IsBodyHtml = true;
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = true;
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                NetworkCredential basicAuthenticationInfo = new NetworkCredential("login", "pass");
+                client.Credentials = basicAuthenticationInfo;
+                client.Send(mail);
+            }
+            catch(Exception e)
+            {
+
+            }
         }
     }
 }
